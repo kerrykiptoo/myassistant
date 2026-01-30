@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="index (1)" data-id="th-modified">
+    <title data-id="th-modified">Web Page</title>
+    
+    <style>
+        /* ===================================
+           RESET & BASE STYLES
+        =================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.7;
+            color: #334155;
+            background: linear-gradient(135deg, #f0f9ff 0%, #fef3c7 50%, #fce7f3 100%);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ===================================
+           ANIMATED BACKGROUND ELEMENTS
+           Soft, calming colored shapes
+        =================================== */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 30%, rgba(94, 234, 212, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 70%, rgba(167, 139, 250, 0.12) 0%, transparent 50%),
+                        radial-gradient(circle at 50% 50%, rgba(252, 211, 77, 0.1) 0%, transparent 50%);
+            z-index: -1;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            33% {
+                transform: translate(30px, -30px) rotate(5deg);
+            }
+            66% {
+                transform: translate(-20px, 20px) rotate(-5deg);
+            }
+        }
+
+        /* Subtle color orbs */
+        .color-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.3;
+            z-index: -1;
+            animation: pulse 8s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .orb-1 {
+            top: 10%;
+            left: 10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(94, 234, 212, 0.4) 0%, transparent 70%);
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            top: 60%;
+            right: 10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(196, 181, 253, 0.3) 0%, transparent 70%);
+            animation-delay: 2s;
+        }
+
+        .orb-3 {
+            bottom: 10%;
+            left: 50%;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(253, 224, 71, 0.25) 0%, transparent 70%);
+            animation-delay: 4s;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.4;
+            }
+        }
+
+        /* ===================================
+           CONTAINER & LAYOUT
+        =================================== */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===================================
+           HERO SECTION
+        =================================== */
+        .hero {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 0 60px;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 720px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+            text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #475569;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .hero-subtext {
+            font-size: 1.05rem;
+            color: #64748b;
+            margin-top: 32px;
+            font-style: italic;
+        }
+
+        /* ===================================
+           BENEFITS SECTION
+        =================================== */
+        .benefits {
+            padding: 60px 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(240, 253, 250, 0.7) 100%);
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .benefits h2 {
+            font-size: 2rem;
+            color: #1e3a8a;
+            text-align: center;
+            margin-bottom: 48px;
+            font-weight: 600;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .benefit-item {
+            text-align: center;
+            padding: 32px 24px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(240, 249, 255, 0.8) 100%);
+            border-radius: 20px;
+            box-shadow: 0 4px 24px rgba(94, 234, 212, 0.12);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(94, 234, 212, 0.2);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated gradient overlay on hover */
+        .benefit-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(94, 234, 212, 0.1) 0%, 
+                rgba(167, 139, 250, 0.1) 50%, 
+                rgba(252, 211, 77, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 0;
+        }
+
+        .benefit-item:hover::before {
+            opacity: 1;
+        }
+
+        .benefit-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(94, 234, 212, 0.25);
+            border-color: rgba(94, 234, 212, 0.5);
+        }
+
+        .benefit-item.active {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(94, 234, 212, 0.3);
+            border-color: rgba(94, 234, 212, 0.6);
+        }
+
+        .benefit-item.active::before {
+            opacity: 1;
+        }
+
+        /* Icon animations */
+        .benefit-icon {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #5eead4 0%, #4fd1c5 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 4px 16px rgba(79, 209, 197, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .benefit-item:hover .benefit-icon {
+            transform: scale(1.15) rotate(5deg);
+            box-shadow: 0 8px 24px rgba(79, 209, 197, 0.5);
+        }
+
+        .benefit-item.active .benefit-icon {
+            transform: scale(1.15) rotate(5deg);
+            box-shadow: 0 8px 24px rgba(79, 209, 197, 0.5);
+            animation: iconBounce 0.6s ease;
+        }
+
+        @keyframes iconBounce {
+            0%, 100% { transform: scale(1.15) rotate(5deg); }
+            50% { transform: scale(1.25) rotate(-5deg); }
+        }
+
+        /* Color variants for each benefit */
+        .benefit-item:nth-child(1) .benefit-icon {
+            background: linear-gradient(135deg, #5eead4 0%, #4fd1c5 100%);
+        }
+
+        .benefit-item:nth-child(2) .benefit-icon {
+            background: linear-gradient(135deg, #c4b5fd 0%, #a78bfa 100%);
+            box-shadow: 0 4px 16px rgba(167, 139, 250, 0.3);
+        }
+
+        .benefit-item:nth-child(2):hover .benefit-icon,
+        .benefit-item:nth-child(2).active .benefit-icon {
+            box-shadow: 0 8px 24px rgba(167, 139, 250, 0.5);
+        }
+
+        .benefit-item:nth-child(3) .benefit-icon {
+            background: linear-gradient(135deg, #fcd34d 0%, #fbbf24 100%);
+            box-shadow: 0 4px 16px rgba(251, 191, 36, 0.3);
+        }
+
+        .benefit-item:nth-child(3):hover .benefit-icon,
+        .benefit-item:nth-child(3).active .benefit-icon {
+            box-shadow: 0 8px 24px rgba(251, 191, 36, 0.5);
+        }
+
+        .benefit-item h3,
+        .benefit-item p {
+            position: relative;
+            z-index: 1;
+        }
+
+        .benefit-item h3 {
+            font-size: 1.3rem;
+            color: #1e3a8a;
+            margin-bottom: 12px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .benefit-item:hover h3,
+        .benefit-item.active h3 {
+            color: #0c4a6e;
+        }
+
+        .benefit-item p {
+            color: #64748b;
+            font-size: 1rem;
+            line-height: 1.7;
+            transition: color 0.3s ease;
+        }
+
+        .benefit-item:hover p,
+        .benefit-item.active p {
+            color: #475569;
+        }
+
+        /* Particle effects */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-60px) scale(0);
+            }
+        }
+
+        /* ===================================
+           INVITATION SECTION
+        =================================== */
+        .invitation {
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .invitation-content {
+            max-width: 680px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(254, 243, 199, 0.6) 50%, rgba(252, 231, 243, 0.6) 100%);
+            backdrop-filter: blur(12px);
+            padding: 48px 40px;
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(94, 234, 212, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: all 0.4s ease;
+        }
+
+        .invitation-content:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(94, 234, 212, 0.25);
+        }
+
+        .invitation h2 {
+            font-size: 2rem;
+            color: #1e3a8a;
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+
+        .invitation p {
+            font-size: 1.15rem;
+            color: #475569;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .invitation-highlight {
+            display: inline-block;
+            margin-top: 24px;
+            padding: 16px 28px;
+            background: linear-gradient(135deg, rgba(94, 234, 212, 0.25) 0%, rgba(16, 185, 129, 0.25) 100%);
+            border-radius: 12px;
+            color: #047857;
+            font-weight: 600;
+            font-size: 1.05rem;
+            box-shadow: 0 2px 12px rgba(16, 185, 129, 0.2);
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .invitation-highlight:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+        }
+
+        /* ===================================
+           FOOTER
+        =================================== */
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            color: #64748b;
+            font-size: 0.9rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(240, 249, 255, 0.6) 100%);
+            backdrop-filter: blur(8px);
+            border-top: 1px solid rgba(94, 234, 212, 0.15);
+        }
+
+        footer p {
+            margin-bottom: 8px;
+        }
+
+        /* ===================================
+           RESPONSIVE ADJUSTMENTS
+        =================================== */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .hero {
+                min-height: 60vh;
+                padding: 60px 0 40px;
+            }
+
+            .benefits h2,
+            .invitation h2 {
+                font-size: 1.6rem;
+            }
+
+            .benefits-grid {
+                gap: 32px;
+            }
+
+            .invitation-content {
+                padding: 36px 28px;
+            }
+
+            .orb-1, .orb-2, .orb-3 {
+                width: 200px;
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .benefit-item {
+                padding: 24px 20px;
+            }
+
+            .invitation-content {
+                padding: 32px 24px;
+            }
+
+            .container {
+                padding: 0 20px;
+            }
+
+            .orb-1, .orb-2, .orb-3 {
+                width: 150px;
+                height: 150px;
+                filter: blur(40px);
+            }
+        }
+
+        /* ===================================
+           ACCESSIBILITY
+        =================================== */
+        a {
+            color: #4fd1c5;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: #10b981;
+        }
+
+        a:focus {
+            outline: 2px solid #4fd1c5;
+            outline-offset: 2px;
+        }
+
+        /* ===================================
+           ENTRANCE ANIMATIONS
+        =================================== */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-content,
+        .benefits,
+        .invitation {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .benefits {
+            animation-delay: 0.2s;
+        }
+
+        .invitation {
+            animation-delay: 0.4s;
+        }
+
+        /* Stagger benefit items animation */
+        .benefit-item:nth-child(1) {
+            animation: fadeIn 0.8s ease-out 0.4s both;
+        }
+
+        .benefit-item:nth-child(2) {
+            animation: fadeIn 0.8s ease-out 0.5s both;
+        }
+
+        .benefit-item:nth-child(3) {
+            animation: fadeIn 0.8s ease-out 0.6s both;
+        }
+    </style>
+<meta property="og:title" content="Web Page" data-id="th-modified"><meta property="og:description" content="index (1)" data-id="th-modified"><meta property="og:image" content="https://tiiny.host/assets/logo-purple-bg.png" data-id="th-modified"><meta property="og:url" content="https://azure-deerdre-75.tiiny.site/" data-id="th-modified"><meta property="og:type" content="website" data-id="th-modified"><script defer="" data-domain="azure-deerdre-75.tiiny.site" src="https://analytics.tiiny.site/js/plausible.js"></script><script type="text/javascript" src="https://tiiny.host/ad-script.js"></script></head>
+<body><div style="position: fixed !important; bottom: 0% !important; left: 0% !important; right: 0% !important; width: 100% !important; height: 55px !important; z-index: 9999 !important;"><a href="https://tiiny.host?ref=free-site">
+    <div style="padding: 10px !important; height: 55px; text-align: center; background: rgb(220,137,232) !important; background: linear-gradient(141deg, rgba(220,137,232,1) 0%, rgba(144,64,204,1) 100%) !important;">
+      <img style="height: 35px !important; width: auto !important;" src="https://tiiny.host/assets/img/ad.png" alt="tiiny.host">
+    </div>
+  </a></div>
+
+    <!-- Animated color orbs for visual interest -->
+    <div class="color-orb orb-1"></div>
+    <div class="color-orb orb-2"></div>
+    <div class="color-orb orb-3"></div>
+
+    <!-- ===================================
+         HERO SECTION
+    =================================== -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="">Welcome. Let's make this simple and stress-free.</h1>
+                <p class="">
+                    Our intelligent assistant handles new client onboarding, easy booking, and escalation to the right person — all in a natural conversation.
+                </p>
+                <p class="">
+                    No forms to fill out. No waiting. Just a friendly conversation that gets you exactly where you need to be.
+                </p>
+                <p class="hero-subtext tiinyeditabletext tiinyedit tiinyeditablefocused" contenteditable="true">
+                    I'm here whenever you're ready to talk.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================
+         BENEFITS SECTION
+    =================================== -->
+    <section class="benefits">
+        <div class="container">
+            <h2>How it works</h2>
+            <div class="benefits-grid">
+                <div class="benefit-item" data-color="#5eead4">
+                    <div class="benefit-icon">💬</div>
+                    <h3>Start a conversation</h3>
+                    <p>
+                        Our friendly assistant is waiting in the corner to guide you. Share what you need help with in your own words.
+                    </p>
+                </div>
+                <div class="benefit-item" data-color="#a78bfa">
+                    <div class="benefit-icon">🎯</div>
+                    <h3>Get personalized support</h3>
+                    <p>
+                        Whether it's intake, scheduling, or questions, the assistant understands your needs and responds instantly.
+                    </p>
+                </div>
+                <div class="benefit-item" data-color="#fbbf24" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(240, 249, 255, 0.8) 100%);">
+                    <div class="benefit-icon">✨</div>
+                    <h3>Seamless handoff</h3>
+                    <p>
+                        When needed, you'll be connected to the right team member — no repeating yourself or navigating complex menus.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================
+         INVITATION SECTION
+    =================================== -->
+    <section class="invitation">
+        <div class="container">
+            <div class="invitation-content">
+                <h2 class="">Ready to get started?</h2>
+                <p>
+                    Feel free to say hello below — we'll take it from there. Start a relaxed conversation for intake, scheduling, or any questions you have.
+                </p>
+                <p>
+                    There's no pressure, no rush. We're here to make your experience as smooth and welcoming as possible.
+                </p>
+                <span class="invitation-highlight" contenteditable="false">
+                    Your assistant is standing by 24/7
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================
+         FOOTER
+    =================================== -->
+    <footer>
+        <div class="container">
+            <p class="" contenteditable="false">© 2026 Leadflowhq<span style="font-size: 0.9rem;" class="">. All rights reserved.</span></p>
+            <p>Secure, private, and here to help.</p>
+        </div>
+    </footer>
+
+    <!-- UChat Embed Container (fixed small widget bottom-right, calm style) -->
+    <div id="embed_chatbot_container_id"
+         style="position: fixed; bottom: 80px; right: 20px; width: 340px; height: 480px; border: 1px solid #e2e8f0; 
+                border-radius: 16px; overflow: hidden; background: rgba(255,255,255,0.97); 
+                box-shadow: 0 10px 40px rgba(94,234,212,0.25); backdrop-filter: blur(10px); 
+                display: none; z-index: 1000;">
+    </div>
+
+    <!-- Floating toggle bubble to open/close chat -->
+    <div onclick="toggleChat()"
+         style="position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; 
+                background: linear-gradient(135deg, #5eead4, #4fd1c5); color: white; 
+                border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+                font-size: 32px; box-shadow: 0 6px 24px rgba(94,234,212,0.4); cursor: pointer; z-index: 999;">
+      💬
+    </div>
+
+    <!-- JavaScript for interactions and UChat dynamic load -->
+    <script>
+        // ===================================
+        // INTERACTIVE BENEFIT CARDS
+        // ===================================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const benefitItems = document.querySelectorAll('.benefit-item');
+            
+            // Add click interaction to benefit cards
+            benefitItems.forEach((item, index) => {
+                // Click handler - toggle active state
+                item.addEventListener('click', function() {
+                    // Remove active from all items
+                    benefitItems.forEach(i => i.classList.remove('active'));
+                    // Add active to clicked item
+                    this.classList.add('active');
+                    
+                    // Create particle effect
+                    createParticles(this);
+                    
+                    // Auto-remove active state after 2 seconds
+                    setTimeout(() => {
+                        this.classList.remove('active');
+                    }, 2000);
+                });
+                
+                // Mouse move effect - subtle color glow following cursor
+                item.addEventListener('mousemove', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const color = this.getAttribute('data-color') || '#5eead4';
+                    
+                    // Create a subtle glow at cursor position
+                    this.style.background = `
+                        radial-gradient(circle at ${x}px ${y}px, 
+                            rgba(${hexToRgb(color)}, 0.15) 0%, 
+                            transparent 50%),
+                        linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(240, 249, 255, 0.8) 100%)
+                    `;
+                });
+                
+                // Reset background on mouse leave
+                item.addEventListener('mouseleave', function() {
+                    this.style.background = 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(240, 249, 255, 0.8) 100%)';
+                });
+            });
+        });
+        
+        // ===================================
+        // PARTICLE EFFECT ON CLICK
+        // ===================================
+        
+        function createParticles(element) {
+            const rect = element.getBoundingClientRect();
+            const color = element.getAttribute('data-color') || '#5eead4';
+            const particleCount = 12;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random position within the card
+                const x = Math.random() * rect.width;
+                const y = Math.random() * rect.height;
+                
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                particle.style.background = color;
+                particle.style.animation = `particleFloat ${0.8 + Math.random() * 0.4}s ease-out forwards`;
+                
+                element.appendChild(particle);
+                
+                // Remove particle after animation
+                setTimeout(() => {
+                    particle.remove();
+                }, 1200);
+            }
+        }
+        
+        // ===================================
+        // UTILITY: HEX TO RGB CONVERTER
+        // ===================================
+        
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result 
+                ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}`
+                : '94, 234, 212';
+        }
+        
+        // ===================================
+        // SMOOTH SCROLL FOR ANY FUTURE LINKS
+        // ===================================
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // ===================================
+        // UCHAT INTEGRATION: TOGGLE + DYNAMIC REF LOAD
+        // ===================================
+        
+        // Toggle chat visibility
+        function toggleChat() {
+          const widget = document.getElementById('embed_chatbot_container_id');
+          if (widget) {
+            widget.style.display = widget.style.display === 'none' ? 'block' : 'none';
+          }
+        }
+
+        // Dynamic UChat loading with client-specific ref
+        const params = new URLSearchParams(window.location.search);
+        const clientKey = params.get('client') || 'default';
+
+        // EDIT THIS: Map client keys to your real UChat ref values (from dashboard)
+        const refByClient = {
+          'client1': 'wf239377w135003',      // Example: replace with actual ref string
+          'client2': 'wf239377w135007',
+          
+          'default': ''                      // Empty for main/default flow
+        };
+
+        const selectedRef = refByClient[clientKey] || refByClient['default'];
+
+        // Load UChat script with ref appended
+        const script = document.createElement('script');
+        script.async = true;
+        script.defer = true;
+        let src = 'https://www.uchat.com.au/js/widget/3mqg0rm2p5hxf5jh/embed.js?id=embed_chatbot_container_id';
+        if (selectedRef) {
+          src += '&ref=' + encodeURIComponent(selectedRef);
+        }
+        script.src = src;
+        document.head.appendChild(script);
+
+        console.log('UChat loading with ref: ' + (selectedRef || '(default)'));
+
+        console.log('✨ Client intake page loaded successfully!');
+        console.log('💡 Interactive benefit cards are ready - try clicking them!');
+    </script>
+
+<div style="height: 55px !important;"></div>
+
+</body>
+</html>
+
